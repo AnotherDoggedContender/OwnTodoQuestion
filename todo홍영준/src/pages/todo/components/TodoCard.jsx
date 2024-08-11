@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { TodoContext } from "../../../context/todoContext";
 
 const TodoCard = ({ $id, $key, $title, $content }) => {
-    const { todoList, setTodoList } = useContext(TodoContext);
+    const { todoList, setTodoList, useTodo } = useContext(TodoContext);
     //todoList 수정
     const [isEdit, setIsEdit] = useState(false);
     const editContentRef = useRef("");
@@ -26,10 +26,8 @@ const TodoCard = ({ $id, $key, $title, $content }) => {
     //todoList 수정 끝
     //todoList 삭제
     const onClickDelete = (thisId) => {
-        const newTodo = todoList.filter((el) => {
-            return el.id !== thisId;
-        });
-        setTodoList(newTodo);
+        useTodo.deleteTodo(thisId);
+        useTodo.getTodo();
     };
     return (
         <S.TodoContainer>

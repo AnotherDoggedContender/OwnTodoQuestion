@@ -1,9 +1,9 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import styled from "styled-components";
-import { TodoContext, useTodo } from "../../../context/todoContext";
+import { TodoContext } from "../../../context/todoContext";
 
 const AddTodoModal = ({ $setIsOpenAddTodoModal }) => {
-    const { todoList, setTodoList } = useContext(TodoContext);
+    const { todoList, setTodoList, useTodo } = useContext(TodoContext);
     const onPressAddBtn = (e) => {
         e.preventDefault();
         const id = Math.floor(Math.random() * 1000000);
@@ -11,6 +11,7 @@ const AddTodoModal = ({ $setIsOpenAddTodoModal }) => {
         const content = e.target.content.value;
         const token = JSON.parse(localStorage.getItem("access_token")).token;
         useTodo.addTodo({ id, title, content, token });
+        useTodo.getTodo();
         // setTodoList([...todoList, { id, title, content }]);
         $setIsOpenAddTodoModal(false);
     };
@@ -43,7 +44,7 @@ const AddTodoModal = ({ $setIsOpenAddTodoModal }) => {
     );
 };
 const ModalScreen = styled.div`
-    height: 300px;
+    height: 100vh;
     width: 100vw;
 
     position: fixed;
@@ -56,7 +57,7 @@ const AddTodoForm = styled.form`
     height: 30%;
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 10%;
     transform: translateX(-50%);
 `;
 const CloseButton = styled.button`

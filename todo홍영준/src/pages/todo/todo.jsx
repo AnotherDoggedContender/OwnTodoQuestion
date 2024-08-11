@@ -1,22 +1,15 @@
 import styled from "styled-components";
-import TodoProvider, { TodoContext, useTodo } from "../../context/todoContext";
+import TodoProvider, { TodoContext } from "../../context/todoContext";
 import TodoCard from "./components/TodoCard";
 import AddTodoModal from "./components/addTodoModal";
 import { useContext, useEffect, useState } from "react";
 
 const Todo = () => {
     function addTodo(title, content) {}
-    const { todoList, setTodoList } = useContext(TodoContext);
+    const { todoList, setTodoList, useTodo } = useContext(TodoContext);
     const [isOpenAddTodoModal, setIsOpenAddTodoModal] = useState(false);
     useEffect(() => {
-        useTodo.getTodo().then(
-            (res) => {
-                setTodoList(res.data);
-            },
-            (err) => {
-                console.log("데이터 요청 오류", err);
-            }
-        );
+        useTodo.getTodo();
     }, []);
 
     return (
